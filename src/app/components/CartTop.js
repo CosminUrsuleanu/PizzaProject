@@ -9,7 +9,7 @@ const CartTop = () => {
     return (
         <div className="w-full h-20 border-b flex items-center justify-between px-10">
             {/* shopping bag text */}
-            <div className="font-semibold">Shopping Bag(3)</div>
+            <div className="font-semibold">Shopping Bag</div>
             {/* close icon */}
             <div
                 onClick={() => setIsOpen(false)}
