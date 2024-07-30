@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useContext, useEffect } from "react";
 // image
 import Image from "next/image";
 // modal
@@ -8,6 +8,8 @@ import Modal from "react-modal";
 import PizzaDetails from "./PizzaDetails";
 // icons
 import { IoCloseOutline } from "react-icons/io5";
+import { FaCheckCircle } from "react-icons/fa";
+import { CartContext } from "../context/CartContext";
 
 // bind modal to body
 Modal.setAppElement("body");
@@ -20,6 +22,8 @@ const modalStyles = {
 };
 
 const Pizza = ({ pizza }) => {
+    const { isInCart, addToCart } = useContext(CartContext);
+    const [inCart, setInCart] = useState(false);
     // modal state
     const [modal, setModal] = useState(false);
     // open modal
@@ -30,6 +34,10 @@ const Pizza = ({ pizza }) => {
     const closeModal = () => {
         setModal(false);
     };
+
+    useEffect(() => {
+        setInCart(isInCart(pizza.id));
+    }, [isInCart, pizza.id]);
 
     return (
         <div className="group py-2 px-4 xl:py-4 xl:px-2 rounded-xl">
@@ -43,9 +51,16 @@ const Pizza = ({ pizza }) => {
                 priority={1}
             />
             {/* title */}
-            <div onClick={openModal}>
+            <div className="flex gap-2" onClick={openModal}>
                 <div className="text-xl font-bold mb-3 capitalize cursor-pointer">
                     {pizza.name}
+                </div>
+                <div>
+                    {inCart && (
+                        <div className=" text-green-300">
+                            <FaCheckCircle size={24} />
+                        </div>
+                    )}
                 </div>
             </div>
             {/* description */}

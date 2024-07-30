@@ -118,6 +118,11 @@ const CartProvider = ({ children }) => {
         }
     };
 
+    // check if item is in cart
+    const isInCart = (id) => {
+        return cart.some((item) => item.id === id);
+    };
+
     return (
         <CartContext.Provider
             value={{
@@ -131,6 +136,7 @@ const CartProvider = ({ children }) => {
                 decreaseAmount,
                 itemAmount,
                 cartTotal,
+                isInCart,
             }}
         >
             {children}
