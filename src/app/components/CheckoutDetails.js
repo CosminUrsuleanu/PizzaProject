@@ -11,6 +11,7 @@ const CheckoutDetails = ({ setModal }) => {
     const [email, setEmail] = useState("");
     const [phone, setPhone] = useState("");
     const [errors, setErrors] = useState({ email: "", phone: "" });
+    const [clientType, setClientType] = useState("physical"); // 'physical' or 'company'
 
     // counter
     useEffect(() => {
@@ -95,18 +96,65 @@ const CheckoutDetails = ({ setModal }) => {
                         <div className="flex-1 h-full overflow-y-auto lg:overflow-visible py-4 px-8 lg:py-0 lg:px-0">
                             {/* input wrapper */}
                             <div className="flex flex-col gap-4 h-full">
-                                {/* firstname & lastname */}
+                                {/* client type */}
+                                <div className="flex gap-4">
+                                    <label>
+                                        <input
+                                            className="mr-2"
+                                            type="radio"
+                                            name="clientType"
+                                            value="physical"
+                                            checked={clientType === "physical"}
+                                            onChange={() =>
+                                                setClientType("physical")
+                                            }
+                                        />
+                                        Persoană Fizică
+                                    </label>
+                                    <label>
+                                        <input
+                                            className="mr-2"
+                                            type="radio"
+                                            name="clientType"
+                                            value="company"
+                                            checked={clientType === "company"}
+                                            onChange={() =>
+                                                setClientType("company")
+                                            }
+                                        />
+                                        Firmă
+                                    </label>
+                                </div>
+
+                                {/* firstname & lastname or company name & CUI */}
                                 <div className="flex flex-col lg:flex-row justify-between gap-4 lg:gap-0 lg:gap-x-4">
-                                    <input
-                                        type="text"
-                                        className="w-full input"
-                                        placeholder="First Name"
-                                    />
-                                    <input
-                                        type="text"
-                                        className="w-full input"
-                                        placeholder="Last Name"
-                                    />
+                                    {clientType === "physical" ? (
+                                        <>
+                                            <input
+                                                type="text"
+                                                className="w-full input"
+                                                placeholder="First Name"
+                                            />
+                                            <input
+                                                type="text"
+                                                className="w-full input"
+                                                placeholder="Last Name"
+                                            />
+                                        </>
+                                    ) : (
+                                        <>
+                                            <input
+                                                type="text"
+                                                className="w-full input"
+                                                placeholder="Company Name"
+                                            />
+                                            <input
+                                                type="text"
+                                                className="w-full input"
+                                                placeholder="CUI"
+                                            />
+                                        </>
+                                    )}
                                 </div>
 
                                 {/* phone & email */}
