@@ -8,6 +8,9 @@ const CheckoutDetails = ({ setModal }) => {
     const { cart, setCart, cartTotal } = useContext(CartContext);
     const [successMsg, setSuccessMsg] = useState(false);
     const [count, setCount] = useState(5);
+    const [email, setEmail] = useState("");
+    const [phone, setPhone] = useState("");
+    const [errors, setErrors] = useState({ email: "", phone: "" });
 
     // counter
     useEffect(() => {
@@ -36,6 +39,38 @@ const CheckoutDetails = ({ setModal }) => {
             return () => clearTimeout(timer);
         }
     }, [successMsg]);
+
+    const validateEmail = (email) => {
+        const re = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+        return re.test(String(email).toLowerCase());
+    };
+
+    const validatePhoneNumber = (phone) => {
+        const re = /^07[0-9]{8}$/;
+        return re.test(String(phone));
+    };
+
+    const handleSubmit = () => {
+        let valid = true;
+        let emailError = "";
+        let phoneError = "";
+
+        if (!validateEmail(email)) {
+            emailError = "Adresa de email nu este validă";
+            valid = false;
+        }
+
+        if (!validatePhoneNumber(phone)) {
+            phoneError = "Numărul de telefon nu este valid";
+            valid = false;
+        }
+
+        setErrors({ email: emailError, phone: phoneError });
+
+        if (valid) {
+            setSuccessMsg(true);
+        }
+    };
 
     return (
         <div>
@@ -76,16 +111,38 @@ const CheckoutDetails = ({ setModal }) => {
 
                                 {/* phone & email */}
                                 <div className="flex flex-col lg:flex-row justify-between gap-4 lg:gap-0 lg:gap-x-4">
-                                    <input
-                                        type="text"
-                                        className="w-full input"
-                                        placeholder="Phone"
-                                    />
-                                    <input
-                                        type="text"
-                                        className="w-full input"
-                                        placeholder="Email Address"
-                                    />
+                                    <div className="w-full">
+                                        <input
+                                            type="text"
+                                            className="w-full input"
+                                            placeholder="Phone"
+                                            value={phone}
+                                            onChange={(e) =>
+                                                setPhone(e.target.value)
+                                            }
+                                        />
+                                        {errors.phone && (
+                                            <p style={{ color: "red" }}>
+                                                {errors.phone}
+                                            </p>
+                                        )}
+                                    </div>
+                                    <div className="w-full">
+                                        <input
+                                            type="text"
+                                            className="w-full input"
+                                            placeholder="Email Address"
+                                            value={email}
+                                            onChange={(e) =>
+                                                setEmail(e.target.value)
+                                            }
+                                        />
+                                        {errors.email && (
+                                            <p style={{ color: "red" }}>
+                                                {errors.email}
+                                            </p>
+                                        )}
+                                    </div>
                                 </div>
 
                                 {/* street & streen no. */}
@@ -168,7 +225,7 @@ const CheckoutDetails = ({ setModal }) => {
                             </div>
                             {/* place order btn */}
                             <button
-                                onClick={() => setSuccessMsg(true)}
+                                onClick={handleSubmit}
                                 className="btn btn-lg gradient w-full"
                             >
                                 Place order
