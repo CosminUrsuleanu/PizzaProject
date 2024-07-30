@@ -33,6 +33,18 @@ const CartBottom = () => {
         setModal(false);
     };
 
+    // handle checkout
+    const handleCheckout = () => {
+        const checkoutData = {
+            items: cart,
+            time: new Date().toISOString(),
+        };
+        localStorage.setItem("checkoutData", JSON.stringify(checkoutData));
+
+        setIsOpen(false);
+        openModal();
+    };
+
     return (
         <>
             {cart.length >= 1 ? (
@@ -46,7 +58,9 @@ const CartBottom = () => {
                     <div className="flex flex-col gap-y-3">
                         <button
                             onClick={() => {
-                                setIsOpen(false), openModal(true);
+                                setIsOpen(false),
+                                    openModal(true),
+                                    handleCheckout();
                             }}
                             className="btn btn-lg gradient font-semibold flex justify-center"
                         >
