@@ -8,7 +8,7 @@ import Topping from "./Topping";
 // context
 import { CartContext } from "../context/CartContext";
 
-const PizzaDetails = ({ pizza, setModal }) => {
+const PizzaDetails = ({ pizza, setModal, germeni }) => {
     // pizza size state
     const [size, setSize] = useState("small");
     // pizza crust state
@@ -104,18 +104,24 @@ const PizzaDetails = ({ pizza, setModal }) => {
                         </div>
                         {/* topping list */}
                         <div className="flex flex-1 flex-wrap gap-2 py-1 justify-center lg:justify-start">
-                            {pizza.toppings?.map((topping, index) => {
-                                return (
-                                    <Topping
-                                        topping={topping}
-                                        additionalTopping={additionalTopping}
-                                        setAdditionalTopping={
-                                            setAdditionalTopping
-                                        }
-                                        key={index}
-                                    />
-                                );
-                            })}
+                            {pizza.toppings
+                                ?.filter(
+                                    (topping) => !germeni.includes(topping.name)
+                                ) // Filtrare toppinguri
+                                .map((topping, index) => {
+                                    return (
+                                        <Topping
+                                            topping={topping}
+                                            additionalTopping={
+                                                additionalTopping
+                                            }
+                                            setAdditionalTopping={
+                                                setAdditionalTopping
+                                            }
+                                            key={index}
+                                        />
+                                    );
+                                })}
                         </div>
                     </div>
                 </div>

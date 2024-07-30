@@ -21,7 +21,7 @@ const modalStyles = {
     },
 };
 
-const Pizza = ({ pizza }) => {
+const Pizza = ({ pizza, germeni }) => {
     const { isInCart, addToCart } = useContext(CartContext);
     const [inCart, setInCart] = useState(false);
     // modal state
@@ -65,7 +65,7 @@ const Pizza = ({ pizza }) => {
             </div>
             {/* description */}
             <div className="text-sm font-medium min-h-[60px] mb-6">
-                {pizza.description}
+                {pizza.description.join(", ")}
             </div>
             {/* price & btn */}
             <div className="mb-6 flex items-center justify-between">
@@ -109,6 +109,7 @@ const Pizza = ({ pizza }) => {
                         pizza={pizza}
                         modal={modal}
                         setModal={setModal}
+                        germeni={germeni}
                     />
                 </Modal>
             )}
