@@ -1,4 +1,5 @@
 "use client";
+import AdCarousel from "./components/AdCarousel";
 import Banner from "./components/Banner";
 import Pizza from "./components/Pizza";
 
@@ -510,6 +511,7 @@ export default function Home() {
     return (
         <section>
             <Banner />
+            <AdCarousel />
             <div className="container mx-auto">
                 {/* Filtru pentru alergeni */}
                 <div className="mb-4">
