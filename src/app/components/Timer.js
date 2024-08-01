@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 
 const Timer = () => {
-    const initialTime = 33 * 60;
+    const initialTime = 37 * 60;
 
     const [timeRemaining, setTimeRemaining] = useState(0);
     const [showTimer, setShowTimer] = useState(false);
@@ -76,7 +76,7 @@ const Timer = () => {
     }
 
     return (
-        <div className="fixed top-[100px] right-4 bg-red-600 text-white p-4 rounded-lg shadow-lg z-50">
+        <div className=" block md:hidden lg:hidden fixed top-[100px] right-4 bg-red-600 text-white p-4 rounded-lg shadow-lg z-50">
             <h1 className="text-xl font-bold">Reducerea expira in:</h1>
             <p className="text-2xl">{formatTime(timeRemaining)}</p>
         </div>
