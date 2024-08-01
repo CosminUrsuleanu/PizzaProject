@@ -4,6 +4,7 @@ import Banner from "./components/Banner";
 import Pizza from "./components/Pizza";
 import Timer from "./components/Timer";
 import { useState } from "react";
+import Weather from "./components/Weather";
 // pizza data
 const pizzas = [
     {
@@ -512,6 +513,7 @@ export default function Home() {
         <section>
             <Banner />
             <AdCarousel />
+            <Weather />
             <Timer />
             <div className="container mx-auto">
                 {/* Filtru pentru alergeni */}
