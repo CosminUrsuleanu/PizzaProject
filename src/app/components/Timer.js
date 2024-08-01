@@ -1,47 +1,48 @@
 import React, { useState, useEffect } from "react";
 
 const Timer = () => {
-    const initialTime = 90 * 60;
-    const [timeRemaining, setTimeRemaining] = useState(initialTime);
+    const initialTime = 33 * 60; // 58 minute în secunde
+
+    const [timeRemaining, setTimeRemaining] = useState(0);
     const [showTimer, setShowTimer] = useState(false);
 
-    const getTimeRemainingFromNow = () => {
-        const now = new Date();
-        const targetTime = new Date();
-        targetTime.setHours(14, 0, 0, 0);
-
-        if (now > targetTime) {
-            const elapsedSeconds = Math.floor((now - targetTime) / 1000);
-            const remainingSeconds = initialTime - elapsedSeconds;
-            return remainingSeconds > 0 ? remainingSeconds : 0;
-        }
-        return initialTime;
-    };
-
     useEffect(() => {
-        const checkWeekendAndTime = () => {
+        const updateTimer = () => {
             const now = new Date();
             const day = now.getDay();
             const hours = now.getHours();
             const minutes = now.getMinutes();
 
-            console.log("Ziua săptămânii: ", day);
-            console.log("Ora curentă: ", hours);
-
+            // Verifică dacă este duminică (0) sau sâmbătă (6) și ora este 17:30 sau mai târziu
             if (
-                (day === 0 || day === 6) &&
-                hours >= 17 &&
-                getTimeRemainingFromNow() > 0
+                (day === 4 || day === 6) &&
+                (hours > 15 || (hours === 15 && minutes >= 30))
             ) {
-                setShowTimer(true);
-                setTimeRemaining(getTimeRemainingFromNow());
+                // Calculează timpul rămas
+                const targetDate = new Date();
+                targetDate.setHours(15, 30, 0, 0); // Ora de început 17:30:00
+                const endTime = new Date(
+                    targetDate.getTime() + initialTime * 1000
+                ); // Ora de final
+
+                // Asigură-te că timpul rămas este pozitiv
+                const remaining = Math.max(
+                    Math.floor((endTime - now) / 1000),
+                    0
+                );
+                if (remaining > 0) {
+                    setTimeRemaining(remaining);
+                    setShowTimer(true);
+                } else {
+                    setShowTimer(false);
+                }
             } else {
                 setShowTimer(false);
             }
         };
 
-        checkWeekendAndTime();
-        const interval = setInterval(checkWeekendAndTime, 1000);
+        updateTimer();
+        const interval = setInterval(updateTimer, 1000);
 
         return () => clearInterval(interval);
     }, []);
@@ -78,7 +79,7 @@ const Timer = () => {
     }
 
     return (
-        <div className="block md:hidden lg:hidden fixed top-[100px] right-4 bg-red-600 text-white p-4 rounded-lg shadow-lg z-50">
+        <div className="fixed top-[100px] right-4 bg-red-600 text-white p-4 rounded-lg shadow-lg z-50">
             <h1 className="text-xl font-bold">Reducerea expira in:</h1>
             <p className="text-2xl">{formatTime(timeRemaining)}</p>
         </div>
