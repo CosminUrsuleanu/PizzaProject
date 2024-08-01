@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 
 const Timer = () => {
-    const initialTime = 33 * 60; // 58 minute în secunde
+    const initialTime = 33 * 60;
 
     const [timeRemaining, setTimeRemaining] = useState(0);
     const [showTimer, setShowTimer] = useState(false);
@@ -13,19 +13,16 @@ const Timer = () => {
             const hours = now.getHours();
             const minutes = now.getMinutes();
 
-            // Verifică dacă este duminică (0) sau sâmbătă (6) și ora este 17:30 sau mai târziu
             if (
                 (day === 4 || day === 6) &&
                 (hours > 15 || (hours === 15 && minutes >= 30))
             ) {
-                // Calculează timpul rămas
                 const targetDate = new Date();
-                targetDate.setHours(15, 30, 0, 0); // Ora de început 17:30:00
+                targetDate.setHours(15, 30, 0, 0);
                 const endTime = new Date(
                     targetDate.getTime() + initialTime * 1000
-                ); // Ora de final
+                );
 
-                // Asigură-te că timpul rămas este pozitiv
                 const remaining = Math.max(
                     Math.floor((endTime - now) / 1000),
                     0
