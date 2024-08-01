@@ -2,7 +2,7 @@
 import AdCarousel from "./components/AdCarousel";
 import Banner from "./components/Banner";
 import Pizza from "./components/Pizza";
-
+import Timer from "./components/Timer";
 import { useState } from "react";
 // pizza data
 const pizzas = [
@@ -512,6 +512,7 @@ export default function Home() {
         <section>
             <Banner />
             <AdCarousel />
+            <Timer />
             <div className="container mx-auto">
                 {/* Filtru pentru alergeni */}
                 <div className="mb-4">
